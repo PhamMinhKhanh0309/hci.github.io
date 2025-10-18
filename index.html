@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chúc mừng ngày 20/10 ngày của phụ nữ 💖</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #ffe6f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      perspective: 1000px;
+    }
+
+    h1, .carousel, .message, .music-control {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+
+    .heart-intro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 6em;
+      color: #ff4da6;
+      animation: heartGrow 2s ease-out forwards;
+      animation-delay: 2s;
+      opacity: 0;
+    }
+
+    @keyframes heartGrow {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
+    h1 {
+      color: #ff66b2;
+      font-size: 2.7em;
+      margin-top: 50px;
+    }
+
+    /* Carousel ảnh */
+    .carousel {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      transform-style: preserve-3d;
+      animation: rotate 20s infinite linear;
+      margin-top: 40px;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 0 20px #ffb6c1;
+      border: 5px solid #fff;
+      left: 0;
+      top: 0;
+    }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .message {
+      margin-top: 40px;
+      color: #cc0066;
+      font-size: 1.4em;
+      width: 80%;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: 0;
+      color: #ff66b2;
+      font-size: 28px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      z-index: 10;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 0.8; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* Nút nhạc 🎵 */
+    .music-control {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #fff0f5;
+      border: none;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      font-size: 24px;
+      color: #ff66b2;
+      box-shadow: 0 0 12px #ffb6c1;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    /* 🌸 Hoa rơi mở đầu */
+    .flower {
+      position: fixed;
+      top: -10px;
+      font-size: 40px; /* 🌸 to gấp đôi */
+      animation: fall 5s linear forwards;
+      z-index: 15;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="heart-intro">💖</div>
+
+  <h1 id="title">Chúc mừng ngày 20/10 ngày của phụ nữ 💐</h1>
+
+  <div class="carousel" id="carousel"></div>
+
+  <div class="message" id="msg">
+    Chúc luôn cười thật tươi, luôn hạnh phúc và rạng rỡ như những cánh hoa hồng 💐  
+    Mỗi ngày bên cạnh đều là một điều ngọt ngào nhất 💞
+  </div>
+
+  <button class="music-control" id="toggleMusic">🎵</button>
+  <audio id="bgMusic" loop>
+    <source src="nhac.m4a" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // 🌸 Hoa rơi mở đầu
+    function createFlower() {
+      const flower = document.createElement("div");
+      flower.classList.add("flower");
+      const emojis = ["🌸", "🌷", "🌹", "🌺", "🌻", "💮"];
+      flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.animationDuration = 3 + Math.random() * 2 + "s";
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), 6000);
+    }
+
+    // Hiệu ứng theo từng giai đoạn 🌸
+    const flowerInterval = setInterval(createFlower, 200);
+
+    // Sau 4 giây dừng hoa → hiện tiêu đề
+    setTimeout(() => {
+      clearInterval(flowerInterval);
+      document.getElementById("title").style.opacity = 1;
+    }, 4000);
+
+    // Sau 6 giây → hiện carousel
+    setTimeout(() => {
+      const carousel = document.getElementById("carousel");
+      carousel.style.opacity = 1;
+      startCarousel();
+    }, 6000);
+
+    // Sau 8 giây → hiện lời chúc
+    setTimeout(() => {
+      document.getElementById("msg").style.opacity = 1;
+    }, 8000);
+
+    // Sau 9 giây → hiện nút nhạc
+    setTimeout(() => {
+      document.getElementById("toggleMusic").style.opacity = 1;
+    }, 9000);
+
+    // 💞 Các phần chính
+    function startCarousel() {
+      const images = ["hci1.jfif","hci2.jfif","hci3.jfif","hci4.jfif","hci5.jfif"];
+      const carousel = document.getElementById("carousel");
+      const angle = 360 / images.length;
+
+      images.forEach((src, i) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.style.transform = `rotateY(${i * angle}deg) translateZ(320px)`;
+        carousel.appendChild(img);
+      });
+
+      // Tim bay 💗
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "💗";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+      setInterval(createHeart, 400);
+
+      // Nhạc nền 🎵
+      const music = document.getElementById("bgMusic");
+      const btn = document.getElementById("toggleMusic");
+      let playing = false;
+
+      btn.onclick = () => {
+        if (playing) {
+          music.pause();
+          btn.textContent = "🔇";
+        } else {
+          music.play();
+          btn.textContent = "🎵";
+        }
+        playing = !playing;
+      };
+    }
+  </script>
+</body>
+</html>
